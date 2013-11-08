@@ -35,6 +35,10 @@ class Logger extends AbstractLogger
      */
     public function __construct($server)
     {
+        // Make sure we end with a slash.
+        if (!preg_match('/\/$/', $server)) {
+            $server .= '/';
+        }
         $this->server = $server;
     }
     
@@ -107,13 +111,18 @@ class Logger extends AbstractLogger
     }
   
     /**
-     * Sends the data to the Wind server using cURL.
+     * Sends the data to the Wind server.
      * 
-     * @param string $json
-     *         The JSON data to send to the Wind server.
+     * @param string $path
+     * @param array $params
      */
-    protected function send($path, $params)
+    protected function send($path, array $params)
     {
-      // ...
+        $ch = curl_init($this->server . $path);
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, false);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $params);
+        curl_exec($ch);
+        curl_close($ch);
     }
 }
