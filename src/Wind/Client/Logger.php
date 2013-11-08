@@ -1,0 +1,119 @@
+<?php
+
+/**
+ * @file
+ * PSR-3 Logger implementation. 
+ * 
+ * The Client\Logger sends the log to the Wind server, which in turn will
+ * persist the log.
+ * 
+ * (c) Wouter Admiraal <wad@wadmiraal.net>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
+namespace Wind\Client;
+
+use Psr\Log\AbstractLogger;
+use Psr\Log\LogLevel;
+use Psr\Log\InvalidArgumentException;
+
+class Logger extends AbstractLogger
+{
+    /**
+     * @var The host where Wind is hosted.
+     */
+    protected $server;
+   
+    /**
+     * Constructor.
+     * 
+     * Give it the path to the Wind server, example: http://localhost:7666.
+     * 
+     * @param string $server
+     */
+    public function __construct($server)
+    {
+        $this->server = $server;
+    }
+    
+    /**
+     * @inheritDoc
+     */
+    public function log($level, $message, array $context = array()) 
+    {
+        switch ($level) {
+            case LogLevel::EMERGENCY:
+            case LogLevel::ALERT:
+            case LogLevel::CRITICAL:
+            case LogLevel::ERROR:
+            case LogLevel::WARNING:
+            case LogLevel::NOTICE:
+            case LogLevel::INFO:
+            case LogLevel::DEBUG:
+                $params = array(
+                    'message' => $message,
+                    'context' => $context,
+                );
+                $path = $this->getPath($level);
+                $this->send($path, $params);
+                break;
+            
+            default:
+                throw new InvalidArgumentException("Got a log level not specified by the PSR-3 standard. Log level received: $level.");
+                break;
+        }    
+    }
+    
+    /**
+     * Matches the correct route for the Wind server to the log level.
+     * 
+     * @param string $level
+     * @return string
+     * @throws \InvalidArgumentException
+     */
+    protected function getPath($level)
+    {
+        switch ($level) {
+            case LogLevel::EMERGENCY:
+                return 'emergency';
+            
+            case LogLevel::ALERT:
+                return 'alert';
+            
+            case LogLevel::CRITICAL:
+                return 'critical';
+            
+            case LogLevel::ERROR:
+                return 'error';
+            
+            case LogLevel::WARNING:
+                return 'warning';
+            
+            case LogLevel::NOTICE:
+                return 'notice';
+            
+            case LogLevel::INFO:
+                return 'info';
+            
+            case LogLevel::DEBUG:
+                return 'debug';
+            
+            default:
+                throw new \InvalidArgumentException("Got a log level not specified by the PSR-3 standard. Log level received: $level.");
+                break;
+        } 
+    }
+  
+    /**
+     * Sends the data to the Wind server using cURL.
+     * 
+     * @param string $json
+     *         The JSON data to send to the Wind server.
+     */
+    protected function send($path, $params)
+    {
+      // ...
+    }
+}
