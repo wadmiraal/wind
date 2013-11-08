@@ -132,11 +132,19 @@ class Router
     }
     
     /**
-     * Get the requested parameters.
+     * Respond with a 204 to make the caller continue its work.
+     */
+    public function respondWith204()
+    {
+        header("HTTP/1.0 204 No Response");
+    }
+    
+    /**
+     * Get the requested POST parameters.
      * 
      * @return array
      */
-    public function getRequestParameters()
+    public function getPost()
     {
         return $_POST;
     }
