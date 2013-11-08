@@ -15,6 +15,7 @@
 
 namespace Wind\Client;
 
+use Wind\Server\Router;
 use Psr\Log\AbstractLogger;
 use Psr\Log\LogLevel;
 use Psr\Log\InvalidArgumentException;
@@ -60,7 +61,7 @@ class Logger extends AbstractLogger
                     'message' => $message,
                     'context' => $context,
                 );
-                $path = $this->getPath($level);
+                $path = Router::getPathFromLogLevel($level);
                 $this->send($path, $params);
                 break;
             
@@ -68,46 +69,6 @@ class Logger extends AbstractLogger
                 throw new InvalidArgumentException("Got a log level not specified by the PSR-3 standard. Log level received: $level.");
                 break;
         }    
-    }
-    
-    /**
-     * Matches the correct route for the Wind server to the log level.
-     * 
-     * @param string $level
-     * @return string
-     * @throws \InvalidArgumentException
-     */
-    protected function getPath($level)
-    {
-        switch ($level) {
-            case LogLevel::EMERGENCY:
-                return 'emergency';
-            
-            case LogLevel::ALERT:
-                return 'alert';
-            
-            case LogLevel::CRITICAL:
-                return 'critical';
-            
-            case LogLevel::ERROR:
-                return 'error';
-            
-            case LogLevel::WARNING:
-                return 'warning';
-            
-            case LogLevel::NOTICE:
-                return 'notice';
-            
-            case LogLevel::INFO:
-                return 'info';
-            
-            case LogLevel::DEBUG:
-                return 'debug';
-            
-            default:
-                throw new \InvalidArgumentException("Got a log level not specified by the PSR-3 standard. Log level received: $level.");
-                break;
-        } 
     }
   
     /**
