@@ -36,6 +36,12 @@ class EndPointTest extends \PHPUnit_Framework_TestCase
         $wind->run();
     }
 
+    /**
+     * Test runtime exception. 
+     *
+     * Calling run() when only a logger and no router is given must 
+     * throw an exception.
+     */
     public function testRuntimeExceptionLoggerSet()
     {
         // Call run with only a logger triggers an exception.
@@ -48,6 +54,12 @@ class EndPointTest extends \PHPUnit_Framework_TestCase
         $wind->run();
     }
 
+    /**
+     * Test runtime exception. 
+     *
+     * Calling run() when only a router and no logger is given must 
+     * throw an exception.
+     */
     public function testRuntimeExceptionRouterSet()
     {
         // Call run with only a router triggers an exception.
@@ -60,6 +72,12 @@ class EndPointTest extends \PHPUnit_Framework_TestCase
         $wind->run();
     }
 
+    /**
+     * Test runtime exception. 
+     *
+     * Calling run() when both a logger and a router are given must 
+     * not throw any exception.
+     */
     public function testNoRuntimeExceptionWhenBothSet()
     {
         // Call run with both does not trigger any error.
