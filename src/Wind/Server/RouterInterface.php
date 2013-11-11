@@ -14,7 +14,7 @@
 
 namespace Wind\Server;
 
-interface RouterInerface
+interface RouterInterface
 {
     /**
      * Matches the correct PSR-3 log level to a route.
