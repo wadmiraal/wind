@@ -15,7 +15,7 @@
 
 namespace Wind\Server;
 
-use Wind\Server\Router;
+use Wind\Server\RouterInterface;
 use Psr\Log\LoggerInterface;
 use Psr\Log\LoggerAwareInterface;
 
@@ -31,13 +31,32 @@ class Server implements LoggerAwareInterface
      */
     protected $router;
     
+    public function __construct(LoggerInterface $logger = null, RouterInterface $router = null)
+    {
+        if (isset($logger)) {
+            $this->setLogger($logger);
+        }
+        if (isset($router)) {
+            $this->setRouter($router);
+        }
+    }
+    
     /**
      * @inheritDoc
      */
     public function setLogger(LoggerInterface $logger)
     {
         $this->logger = $logger;
-        $this->router = new Router();
+    }
+    
+    /**
+     * Register the router.
+     * 
+     * @param RouterInterface $router
+     */
+    public function setRouter(RouterInterface $router)
+    {
+        $this->router = $router;
     }
     
     /**
@@ -45,25 +64,25 @@ class Server implements LoggerAwareInterface
      */
     public function run()
     {        
+        if (!isset($this->router) || !isset($this->logger)) {
+            throw new \RuntimeException("Tried to run Wind, but couldn't find a router and/or a logger instance.");
+        }
+        
         $route = $this->router->getRequestedPath();
         
-        switch ($route) {
-            case Router::EMERGENCY:
-            case Router::ALERT:
-            case Router::CRITICAL:
-            case Router::ERROR:
-            case Router::WARNING:
-            case Router::NOTICE:
-            case Router::INFO:
-            case Router::DEBUG:
-                // Tell the caller we've got this.
-                $this->router->respondWith204();
-                
-                // Handle the request and log.
-                $params = $this->router->getPost();
-                $level = Router::getLogLevelFromRoute($route);
-                $this->logger->log($level, $params['message'], $params['context']);
-                break;
+        try {
+            // Get the log level. This will trigger an error if the route is not matched to 
+            // a log level. Catch it. We might want to add a front-end later.
+            $level = $this->router->getLogLevelFromRoute($route);
+            
+            // Tell the caller we've got this.
+            $this->router->respond('', 204);
+            
+            $params = $this->router->getPost();
+            $this->logger->log($level, $params['message'], $params['context']);
+            
+        } catch (\InvalidArgumentException $e) {
+            // Reserve for a future web-interface ?
         }
     }
 }

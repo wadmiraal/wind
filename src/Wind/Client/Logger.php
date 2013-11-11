@@ -26,6 +26,11 @@ class Logger extends AbstractLogger
      * @var The host where Wind is hosted.
      */
     protected $server;
+    
+    /**
+     * @var A router implementing the Wind server router interface.
+     */
+    protected $router;
    
     /**
      * Constructor.
@@ -34,13 +39,14 @@ class Logger extends AbstractLogger
      * 
      * @param string $server
      */
-    public function __construct($server)
+    public function __construct($server, RouterInterface $router)
     {
         // Make sure we end with a slash.
         if (!preg_match('/\/$/', $server)) {
             $server .= '/';
         }
         $this->server = $server;
+        $this->router = $router;
     }
     
     /**
@@ -61,7 +67,7 @@ class Logger extends AbstractLogger
                     'message' => $message,
                     'context' => $context,
                 );
-                $path = Router::getPathFromLogLevel($level);
+                $path = $this->router->getRouteFromLogLevel($level);
                 $this->send($path, $params);
                 break;
             

@@ -4,4 +4,4 @@
  * @file
  */
 
-// ... routing and stuff
+require 'vendor/autoload.php';

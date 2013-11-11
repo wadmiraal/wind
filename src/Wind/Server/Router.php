@@ -4,8 +4,6 @@
  * @file
  * Wind server router.
  * 
- * ...
- * 
  * (c) Wouter Admiraal <wad@wadmiraal.net>
  *
  * For the full copyright and license information, please view the LICENSE
@@ -14,33 +12,54 @@
 namespace Wind\Server;
 
 use Psr\Log\LogLevel;
+use Wind\Server\RouterInterface;
 
-class Router
+class Router implements RouterInterface
 {
+    /**
+     * @const The emergency level route for the server.
+     */
     const EMERGENCY = 'emergency';
     
+    /**
+     * @const The alert level route for the server.
+     */
     const ALERT = 'alert';
     
+    /**
+     * @const The critical level route for the server.
+     */
     const CRITICAL = 'critical';
     
+    /**
+     * @const The error level route for the server.
+     */
     const ERROR = 'error';
     
+    /**
+     * @const The warning level route for the server.
+     */
     const WARNING = 'warning';
     
+    /**
+     * @const The notice level route for the server.
+     */
     const NOTICE = 'notice';
     
+    /**
+     * @const The info level route for the server.
+     */
     const INFO = 'info';
     
+    /**
+     * @const The debug level route for the server.
+     */
     const DEBUG = 'debug';
     
     /**
-     * Matches the correct log level to a route.
-     * 
-     * @param string $level
-     * @return string
-     * @throws \InvalidArgumentException
+     * @inheritDoc
      */
-    public static function getPathFromLogLevel($level)
+    public function getRouteFromLogLevel($level)
     {
         switch ($level) {
             case LogLevel::EMERGENCY:
@@ -74,13 +93,9 @@ class Router
     }
     
     /**
-     * Matches the correct route for the Wind server to the log level.
-     * 
-     * @param string $route
-     * @return string
-     * @throws \InvalidArgumentException
+     * @inheritDoc
      */
-    public static function getLogLevelFromRoute($route)
+    public function getLogLevelFromRoute($route)
     {
         switch ($route) {
             case self::EMERGENCY:
@@ -114,35 +129,39 @@ class Router
     }
     
     /**
-     * Get the requested path.
-     * 
-     * @return string
+     * @inheritDoc
      */
     public function getRequestedPath()
     {
         if (!empty($_SERVER['PATH_INFO'])) {
             return $_SERVER['PATH_INFO'];
-        }
-        elseif (!empty($_SERVER['PHP_SELF']) && !empty($_SERVER['SCRIPT_NAME'])) {
+        } elseif (!empty($_SERVER['PHP_SELF']) && !empty($_SERVER['SCRIPT_NAME'])) {
             return substr($_SERVER['PHP_SELF'], strlen($_SERVER['SCRIPT_NAME']));
-        }
-        else {
+        } else {
             return '';
         }
     }
     
     /**
-     * Respond with a 204 to make the caller continue its work.
+     * @inheritDoc
      */
-    public function respondWith204()
+    public function respond($body, $http_code = 302)
     {
-        header("HTTP/1.0 204 No Response");
+        // todo.
+        switch ($http_code) {
+            case 204:
+                header("HTTP/1.0 204 No Response");
+                break;
+            
+            default:
+                header("HTTP/1.0 302 Found");
+                break;
+        }
+        echo $body;   
     }
     
     /**
-     * Get the requested POST parameters.
-     * 
-     * @return array
+     * @inheritDoc
      */
     public function getPost()
     {
