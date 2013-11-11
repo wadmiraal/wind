@@ -65,7 +65,7 @@ class Logger extends AbstractLogger
             case LogLevel::DEBUG:
                 $params = array(
                     'message' => $message,
-                    'context' => $context,
+                    'context' => json_encode($context),
                 );
                 $path = $this->router->getRouteFromLogLevel($level);
                 $this->send($path, $params);

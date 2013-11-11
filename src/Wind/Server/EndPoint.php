@@ -19,7 +19,7 @@ use Wind\Server\RouterInterface;
 use Psr\Log\LoggerInterface;
 use Psr\Log\LoggerAwareInterface;
 
-class Server implements LoggerAwareInterface
+class EndPoint implements LoggerAwareInterface
 {
     /**
      * @var The logger to use to persist the logs.
@@ -79,7 +79,7 @@ class Server implements LoggerAwareInterface
             $this->router->respond('', 204);
             
             $params = $this->router->getPost();
-            $this->logger->log($level, $params['message'], $params['context']);
+            $this->logger->log($level, $params['message'], json_decode($params['context']));
             
         } catch (\InvalidArgumentException $e) {
             // Reserve for a future web-interface ?
