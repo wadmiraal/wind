@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit bootstrap="src/Wind/Tests/bootstrap.php" colors="true">
+    <testsuites>
+        <testsuite name="Wind Tests">
+            <directory>src/Wind/Tests/</directory>
+        </testsuite>
+    </testsuites>
+</phpunit>
