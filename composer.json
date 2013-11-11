@@ -1,5 +1,5 @@
 {
-    "name": "wind/wind",
+    "name": "wadmiraal/wind",
     "description": "Lightweight, PSR compliant log server for fast and efficient logging. Wind exposes a REST server, but does not provide any logging functionality as is.",
     "keywords": ["log", "logging", "psr-3", "rest"],
     "homepage": "http://github.com/wadmiraal/wind",
