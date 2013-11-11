@@ -15,7 +15,7 @@
 
 namespace Wind\Client;
 
-use Wind\Server\Router;
+use Wind\Server\RouterInterface;
 use Psr\Log\AbstractLogger;
 use Psr\Log\LogLevel;
 use Psr\Log\InvalidArgumentException;
