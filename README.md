@@ -1,7 +1,7 @@
 Wind - Fast logging for PHP
 ===========================
 
-[![Build Status](https://travis-ci.org/wadmiraal/wind.svg?branch=master)](https://travis-ci.org/wadmiraal/wind) [![Coverage Status](https://coveralls.io/repos/wadmiraal/wind/badge.png)](https://coveralls.io/r/wadmiraal/wind)
+[![Build Status](https://travis-ci.org/wadmiraal/wind.svg?branch=master)](https://travis-ci.org/wadmiraal/wind) [![Coverage Status](https://coveralls.io/repos/wadmiraal/wind/badge.png?branch=master)](https://coveralls.io/r/wadmiraal/wind?branch=master)
 
 Wind is a lightweight and fast logging server for PHP.
 
