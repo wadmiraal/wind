@@ -1,3 +1,4 @@
 .settings
 composer.lock
+composer.phar
 vendor/
