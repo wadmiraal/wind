@@ -19,16 +19,16 @@ Wind does not provide any logging functionality as-is. It is meant to be used wi
 Usage
 -----
 
-You'll find an example script in `src/bin/server.sh`. **This should not be used in production.** It launches PHP's built in server, which is not meant to be used in production environments. You can use it with the following commands:
+You'll find an example script in `src/bin/server.sh`. **This should not be used in production.** It launches PHP's built in server, which is not meant to be used in production environments. It serves as an example. It launches `server.php`. You can use it with the following commands:
 
-````shell
+````bash
 chmod +x src/bin/server.sh
 ./src/bin/server.sh
 ````
 
 This will launch a Wind server at `localhost:6789`, using [Monolog](https://github.com/Seldaek/monolog) (if it fails, make sure to update your `composer.json` to include `"monolog/monolog": "1.9.1"`).
 
-You can now do POST requests to log, using the `Wind\Client\Logger` class:
+You can now post log requests, using the `Wind\Client\Logger` class:
 
 ````php
 
