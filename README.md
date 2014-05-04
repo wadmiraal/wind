@@ -8,7 +8,7 @@ Wind is a lightweight and fast logging server for PHP.
 Goal
 ----
 
-Logging can slow down an application. PHP runs everything in the same process, and logging operations can be heavy, both in memory and IO.
+Logging can slow down a PHP application. PHP runs everything in the same process, and logging operations can be heavy, both in memory and IO. Some solutions exist to split the workload and let another application handle the logging, but most are heavy and require complicated setup.
 
 Wind exposes a light REST server to which the main PHP application can post log requests. This will trigger a *new* PHP process for the actual logging, leaving the main application to concentrate on its main tasks.
 
@@ -16,17 +16,39 @@ Wind responds with a `HTTP/1.0 204 No Response`, immediately terminating the req
 
 Wind does not provide any logging functionality as-is. It is meant to be used with a PSR-3 compatible logging library (like [Monolog](https://github.com/Seldaek/monolog)).
 
+Installation
+------------
+
+The easiest way is through [Composer](https://getcomposer.org). Create a `composer.json` file, or copy the `composer.json.dist` file that comes with Wind:
+
+````json
+{
+    "require": {
+        "wadmiraal/wind": "dev-master"
+    }
+}
+````
+
+Next, call `composer install`, or `composer update` if you already had installed packages before.
+
 Usage
 -----
 
-You'll find an example script in `src/bin/server.sh`. It launches PHP's built in server, which is not meant to be used in production environments. It serves as an example. It launches `server.php`. You can use it with the following commands:
+You'll find an example script in `src/bin/server.sh`. It launches PHP's built in server, which is not meant to be used in production environments; it only serves as an example. The script listens to `localhost:6789` and routes requests to `src/bin/server.php`. You can use it with the following commands:
 
+**If installed by cloning the GIT repo:**
 ````bash
 chmod +x src/bin/server.sh
 ./src/bin/server.sh
 ````
 
-This will launch a Wind server at `localhost:6789`, using [Monolog](https://github.com/Seldaek/monolog) (if it fails, make sure to update your `composer.json` to include `"monolog/monolog": "1.9.1"`).
+**If installed through Composer:**
+````bash
+chmod +x vendor/bin/server.sh
+./vendor/bin/server.sh
+````
+
+This will launch a Wind server, using [Monolog](https://github.com/Seldaek/monolog) (if it fails, make sure to update your `composer.json` to include `"monolog/monolog": "1.9.1"`).
 
 You can now post log requests, using the `Wind\Client\Logger` class:
 
