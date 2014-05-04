@@ -69,7 +69,7 @@ class EndPoint implements LoggerAwareInterface
         }
         
         $route = $this->router->getRequestedPath();
-
+        
         try {
             // Get the log level. This will trigger an error if the route is not matched to 
             // a log level. Catch it. We might want to add a front-end later.
@@ -83,6 +83,8 @@ class EndPoint implements LoggerAwareInterface
             
         } catch (\InvalidArgumentException $e) {
             // Reserve for a future web-interface ?
+            // For now, return a 400 bad request.
+            $this->router->respond('This method does not exist (yet ?)', 400);
         }
     }
 }
