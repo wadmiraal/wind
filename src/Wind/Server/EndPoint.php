@@ -69,7 +69,7 @@ class EndPoint implements LoggerAwareInterface
         }
         
         $route = $this->router->getRequestedPath();
-        
+
         try {
             // Get the log level. This will trigger an error if the route is not matched to 
             // a log level. Catch it. We might want to add a front-end later.
@@ -79,7 +79,7 @@ class EndPoint implements LoggerAwareInterface
             $this->router->respond('', 204);
             
             $params = $this->router->getPost();
-            $this->logger->log($level, $params['message'], json_decode($params['context']));
+            $this->logger->log($level, $params['message'], (array) json_decode($params['context']));
             
         } catch (\InvalidArgumentException $e) {
             // Reserve for a future web-interface ?
