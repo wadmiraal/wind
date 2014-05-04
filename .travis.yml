@@ -4,6 +4,6 @@ php:
   - 5.4
   - hhvm
 install:
-  - echo "{'require': {'psr/log': '~1.0', 'monolog/monolog': '1.9.1'}}" > composer.json
+  - echo "{\"require\": {\"psr/log\": \"~1.0\", \"monolog/monolog\": \"1.9.1\"}}" > composer.json
   - composer install
 script: phpunit
