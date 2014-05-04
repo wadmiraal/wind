@@ -148,23 +148,24 @@ class Router implements RouterInterface
                 $port = $_SERVER['SERVER_PORT'];
 
                 $uri = substr($uri, strlen("$scheme://$host:$port/"));
-            } 
-            // Request URI contains script name.
-            elseif (!empty($_SERVER['SCRIPT_NAME']) && strpos($_SERVER['REQUEST_URI'], $_SERVER['SCRIPT_NAME']) !== false) {
-                $uri = substr($uri, strlen($_SERVER['SCRIPT_NAME']));
-            }
-            // Request URI contains no script name, but is not at the root of the server.
-            // This means we are being redirected.
-            elseif (!empty($_SERVER['SCRIPT_NAME']) && $_SERVER['REQUEST_URI'] != $_SERVER['SCRIPT_NAME']) {
-                $parts = explode('/', $_SERVER['SCRIPT_NAME']);
-                array_pop($parts);
-                $uri = substr($uri, strlen(implode('/', $parts)));
+            } elseif (!empty($_SERVER['SCRIPT_NAME']) && $_SERVER['REQUEST_URI'] != $_SERVER['SCRIPT_NAME']) {
+                // Request URI contains script name.
+                if (strpos($_SERVER['REQUEST_URI'], $_SERVER['SCRIPT_NAME']) !== false) {
+                    $uri = substr($uri, strlen($_SERVER['SCRIPT_NAME']));
+                }
+                // Request URI contains no script name, but is not at the root of the server.
+                // This means we are being redirected. 
+                else {
+                    $parts = explode('/', $_SERVER['SCRIPT_NAME']);
+                    array_pop($parts);
+                    $uri = substr($uri, strlen(implode('/', $parts)));
+                }
             }
 
             if (preg_match('/^\//', $uri)) {
                 $uri = substr($uri, 1);
             }
-
+            
             return $uri;
         } else {
             return '';
@@ -180,6 +181,10 @@ class Router implements RouterInterface
         switch ($http_code) {
             case 204:
                 header("HTTP/1.0 204 No Response");
+                break;
+
+            case 400:
+                header("HTTP/1.0 400 Bad Request");
                 break;
             
             default:
