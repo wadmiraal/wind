@@ -28,5 +28,5 @@
     "bin": [
         "src/bin/server.sh",
         "src/bin/server.php"
-    ],
+    ]
 }
