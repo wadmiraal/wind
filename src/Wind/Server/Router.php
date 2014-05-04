@@ -130,6 +130,9 @@ class Router implements RouterInterface
     
     /**
      * @inheritDoc
+     * @codeCoverageIgnore
+     * We test this case with Wind\Tests\bin\LiveTest, but PHPUnit doesn't
+     * pick it up during code coverage analysis. Tell him to ignore it.
      */
     public function getRequestedPath()
     {
@@ -174,6 +177,9 @@ class Router implements RouterInterface
     
     /**
      * @inheritDoc
+     * @codeCoverageIgnore
+     * We test this case with Wind\Tests\bin\LiveTest, but PHPUnit doesn't
+     * pick it up during code coverage analysis. Tell him to ignore it.
      */
     public function respond($body, $http_code = 302)
     {
@@ -196,6 +202,9 @@ class Router implements RouterInterface
     
     /**
      * @inheritDoc
+     * @codeCoverageIgnore
+     * We test this case with Wind\Tests\bin\LiveTest, but PHPUnit doesn't
+     * pick it up during code coverage analysis. Tell him to ignore it.
      */
     public function getPost()
     {

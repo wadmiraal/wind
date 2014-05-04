@@ -82,9 +82,15 @@ class EndPoint implements LoggerAwareInterface
             $this->logger->log($level, $params['message'], (array) json_decode($params['context']));
             
         } catch (\InvalidArgumentException $e) {
+            // @codeCoverageIgnoreStart
+            // We test this case with Wind\Tests\bin\LiveTest, but PHPUnit doesn't
+            // pick it up during code coverage analysis. Tell him to ignore it.
+
             // Reserve for a future web-interface ?
             // For now, return a 400 bad request.
             $this->router->respond('This method does not exist (yet ?)', 400);
+
+            // @codeCoverageIgnoreEnd
         }
     }
 }
