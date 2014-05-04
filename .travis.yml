@@ -6,4 +6,7 @@ php:
 install:
   - cp composer.json.dist composer.json
   - composer install
+  - cd src/bin
+  - chmod +x server.sh
+  - ./server.sh &
 script: phpunit
