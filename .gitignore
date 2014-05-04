@@ -2,4 +2,5 @@
 *.sublime-*
 composer.lock
 composer.phar
+src/bin/log.log
 vendor/
