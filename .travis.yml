@@ -4,6 +4,7 @@ php:
   - 5.4
   - hhvm
 install:
+  - rm composer.json
   - cp composer.json.dist composer.json
   - composer install
   - cd src/bin
