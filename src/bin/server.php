@@ -27,5 +27,5 @@ try {
     die("This example script requires Monolog. Aborting.");
 }
 
-$wind = new Endpoint($logger, new Router());
+$wind = new EndPoint($logger, new Router());
 $wind->run();

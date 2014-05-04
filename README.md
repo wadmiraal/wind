@@ -75,7 +75,7 @@ use Wind\Server\Router;
 
 $logger = new Logger('name');
 $logger->pushHandler(new StreamHandler('./log.log', Logger::DEBUG));
-$wind = new Endpoint($logger, new Router());
+$wind = new EndPoint($logger, new Router());
 $wind->run();
 
 ````
