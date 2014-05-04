@@ -13,7 +13,7 @@
  * file that was distributed with this source code.
  */
 
-require dirname(__FILE__) . '/../../vendor/autoload.php';
+require './../../vendor/autoload.php';
 
 use Monolog\Logger;
 use Monolog\Handler\StreamHandler;
@@ -22,7 +22,7 @@ use Wind\Server\Router;
 
 try {
     $logger = new Logger('name');
-    $logger->pushHandler(new StreamHandler(dirname(__FILE__) . '/log.log', Logger::DEBUG));
+    $logger->pushHandler(new StreamHandler('./log.log', Logger::DEBUG));
 } catch (Exception $e) {
     die("This example script requires Monolog. Aborting.");
 }
