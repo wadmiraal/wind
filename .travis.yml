@@ -12,3 +12,5 @@ install:
   - ./server.sh &
   - cd ../../
 script: phpunit
+after_script:
+  - php vendor/bin/coveralls
