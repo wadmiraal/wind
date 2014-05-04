@@ -2,18 +2,30 @@
 
 /**
  * @file
+ * Sample script for launching Wind as a REST server.
+ * 
+ * This script launches a sample Wind server and stores all log request
+ * to a file called log.log. This script requires the Monolog library.
+ *
+ * (c) Wouter Admiraal <wad@wadmiraal.net>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
-// Fetch the Composer autoload logic.
-require '../../../../vendor/autoload.php';
+require dirname(__FILE__) . '/../../vendor/autoload.php';
+
+use Monolog\Logger;
+use Monolog\Handler\StreamHandler;
+use Wind\Server\EndPoint;
+use Wind\Server\Router;
 
 try {
-    // todo
-    $logger = new Monolog();
+    $logger = new Logger('name');
+    $logger->pushHandler(new StreamHandler(dirname(__FILE__) . '/log.log', Logger::WARNING));
 } catch (Exception $e) {
     die("This example script requires Monolog. Aborting.");
 }
 
-$router = new Wind\Server\Router();
-$wind = new Wind\Server\EndPoint($logger, $router);
+$wind = new Endpoint($logger, new Router());
 $wind->run();
