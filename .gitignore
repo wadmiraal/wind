@@ -1,5 +1,6 @@
 .settings
 *.sublime-*
+composer.json
 composer.lock
 composer.phar
 src/bin/log.log
