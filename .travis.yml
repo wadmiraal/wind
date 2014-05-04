@@ -11,6 +11,7 @@ install:
   - chmod +x server.sh
   - ./server.sh &
   - cd ../../
+  - mkdir -p build/logs
 script: phpunit
 after_script:
   - php vendor/bin/coveralls
