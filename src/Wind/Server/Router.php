@@ -148,7 +148,11 @@ class Router implements RouterInterface
                 $port = $_SERVER['SERVER_PORT'];
 
                 $uri = substr($uri, strlen("$scheme://$host:$port/"));
-            } elseif (preg_match('/^\//', $uri)) {
+            } elseif (!empty($_SERVER['SCRIPT_NAME']) && $_SERVER['SCRIPT_NAME'] != $_SERVER['REQUEST_URI']) {
+                $uri = substr($uri, strlen($_SERVER['SCRIPT_NAME']));
+            }
+
+            if (preg_match('/^\//', $uri)) {
                 $uri = substr($uri, 1);
             }
             
