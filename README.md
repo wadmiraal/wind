@@ -34,18 +34,16 @@ Next, call `composer install`, or `composer update` if you already had installed
 Usage
 -----
 
-You'll find an example script in `src/bin/server.sh`. It launches PHP's built in server, which is not meant to be used in production environments; it only serves as an example. The script listens to `localhost:6789` and routes requests to `src/bin/server.php`. You can use it with the following commands:
+Note: the following is only valid if installed through Composer.
 
-**If installed by cloning the GIT repo:**
-````bash
-chmod +x src/bin/server.sh
-./src/bin/server.sh
-````
+You'll find an example script in `vendor/bin/server.php`. 
 
-**If installed through Composer:**
+`vendor/bin/server.sh` launches PHP's built in server, which is not meant to be used in production environments; it only serves as an example. The script listens to `localhost:6789` and routes requests to `vendor/bin/server.php`. You can use it with the following commands:
+
 ````bash
-chmod +x vendor/bin/server.sh
-./vendor/bin/server.sh
+cd vendor/bin
+chmod +x server.sh
+./server.sh
 ````
 
 This will launch a Wind server, using [Monolog](https://github.com/Seldaek/monolog) (if it fails, make sure to update your `composer.json` to include `"monolog/monolog": "1.9.1"`).
@@ -64,4 +62,4 @@ $logger->log(LogLevel::NOTICE, 'Log this message for me', array('in_context' => 
 
 ````
 
-Checkout `src/bin/server.php` for a concrete example of using Wind server-side with Monolog.
+Checkout `vendor/bin/server.php` for a concrete example of using Wind server-side with Monolog.
