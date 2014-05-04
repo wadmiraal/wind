@@ -22,7 +22,7 @@ use Wind\Server\Router;
 
 try {
     $logger = new Logger('name');
-    $logger->pushHandler(new StreamHandler(dirname(__FILE__) . '/log.log', Logger::WARNING));
+    $logger->pushHandler(new StreamHandler(dirname(__FILE__) . '/log.log', Logger::DEBUG));
 } catch (Exception $e) {
     die("This example script requires Monolog. Aborting.");
 }
