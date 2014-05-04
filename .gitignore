@@ -5,3 +5,4 @@ composer.lock
 composer.phar
 src/bin/log.log
 vendor/
+src/bin/test.php
