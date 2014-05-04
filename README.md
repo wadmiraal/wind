@@ -34,9 +34,9 @@ Next, call `composer install`, or `composer update` if you already had installed
 Usage
 -----
 
-Note: the following is only valid if installed through Composer.
-
 You'll find an example script in `vendor/bin/server.php`. 
+
+*Note: what follows is only valid if installed through Composer.*
 
 `vendor/bin/server.sh` launches PHP's built in server, which is not meant to be used in production environments; it only serves as an example. The script listens to `localhost:6789` and routes requests to `vendor/bin/server.php`. You can use it with the following commands:
 
@@ -62,4 +62,20 @@ $logger->log(LogLevel::NOTICE, 'Log this message for me', array('in_context' => 
 
 ````
 
-Checkout `vendor/bin/server.php` for a concrete example of using Wind server-side with Monolog.
+Checkout `vendor/bin/server.php` for a concrete example of using Wind server-side with Monolog. There are many ways to set this up, but one good idea would be to set up an Apache or NginX virtual host, specifically for Wind. This could even be running on a different server, to reduce the workload on your application server even more (make sure to protect it from public writes, in this case).
+
+Here's a basic example, using Monolog:
+
+````php
+
+use Monolog\Logger;
+use Monolog\Handler\StreamHandler;
+use Wind\Server\EndPoint;
+use Wind\Server\Router;
+
+$logger = new Logger('name');
+$logger->pushHandler(new StreamHandler('./log.log', Logger::DEBUG));
+$wind = new Endpoint($logger, new Router());
+$wind->run();
+
+````
