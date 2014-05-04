@@ -148,14 +148,23 @@ class Router implements RouterInterface
                 $port = $_SERVER['SERVER_PORT'];
 
                 $uri = substr($uri, strlen("$scheme://$host:$port/"));
-            } elseif (!empty($_SERVER['SCRIPT_NAME']) && $_SERVER['SCRIPT_NAME'] != $_SERVER['REQUEST_URI']) {
+            } 
+            // Request URI contains script name.
+            elseif (!empty($_SERVER['SCRIPT_NAME']) && strpos($_SERVER['REQUEST_URI'], $_SERVER['SCRIPT_NAME']) !== false) {
                 $uri = substr($uri, strlen($_SERVER['SCRIPT_NAME']));
+            }
+            // Request URI contains no script name, but is not at the root of the server.
+            // This means we are being redirected.
+            elseif (!empty($_SERVER['SCRIPT_NAME']) && $_SERVER['REQUEST_URI'] != $_SERVER['SCRIPT_NAME']) {
+                $parts = explode('/', $_SERVER['SCRIPT_NAME']);
+                array_pop($parts);
+                $uri = substr($uri, strlen(implode('/', $parts)));
             }
 
             if (preg_match('/^\//', $uri)) {
                 $uri = substr($uri, 1);
             }
-            
+
             return $uri;
         } else {
             return '';
