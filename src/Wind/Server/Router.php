@@ -133,10 +133,26 @@ class Router implements RouterInterface
      */
     public function getRequestedPath()
     {
-        if (!empty($_SERVER['PATH_INFO'])) {
-            return $_SERVER['PATH_INFO'];
-        } elseif (!empty($_SERVER['PHP_SELF']) && !empty($_SERVER['SCRIPT_NAME'])) {
-            return substr($_SERVER['PHP_SELF'], strlen($_SERVER['SCRIPT_NAME']));
+        if (!empty($_SERVER['REQUEST_URI'])) {
+            $uri = $_SERVER['REQUEST_URI'];
+
+            // Request URI contains host information.
+            if (preg_match('/^https?:\/\//', $uri)) {
+                if (!empty($_SERVER['HTTPS'])) {
+                    $scheme = 'https';
+                } else {
+                    $scheme = 'http';
+                }
+
+                $host = $_SERVER['SERVER_NAME'];
+                $port = $_SERVER['SERVER_PORT'];
+
+                $uri = substr($uri, strlen("$scheme://$host:$port/"));
+            } elseif (preg_match('/^\//', $uri)) {
+                $uri = substr($uri, 1);
+            }
+            
+            return $uri;
         } else {
             return '';
         }
