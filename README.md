@@ -19,7 +19,7 @@ Wind does not provide any logging functionality as-is. It is meant to be used wi
 Usage
 -----
 
-You'll find an example script in `src/bin/server.sh`. **This should not be used in production.** It launches PHP's built in server, which is not meant to be used in production environments. It serves as an example. It launches `server.php`. You can use it with the following commands:
+You'll find an example script in `src/bin/server.sh`. It launches PHP's built in server, which is not meant to be used in production environments. It serves as an example. It launches `server.php`. You can use it with the following commands:
 
 ````bash
 chmod +x src/bin/server.sh
@@ -41,3 +41,5 @@ $logger = new Logger('http://localhost:6789', new Router());
 $logger->log(LogLevel::NOTICE, 'Log this message for me', array('in_context' => 'of something'));
 
 ````
+
+Checkout `src/bin/server.php` for a concrete example of using Wind server-side with Monolog.
